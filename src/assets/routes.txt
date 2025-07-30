@@ -1,0 +1,5 @@
+﻿route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_color,route_text_color
+②_A,9000020012025,②,,,0,FF0000,FFFFFF
+⑤_A,9000020012025,⑤,,,0,0000FF,FFFFFF
+②_B,9000020012025,②,２,,0,FF0000,FFFFFF
+⑤_B,9000020012025,⑤,５,,0,0000FF,FFFFFF
