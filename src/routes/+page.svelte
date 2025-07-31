@@ -33,9 +33,11 @@
 					type: "Feature",
 					geometry: {
 						"type": "Point",
-						"coordinates": [entity.position.longitude, entity.position.latitude]
+						"coordinates": [entity.position.longitude, entity.position.latitude],
 					},
-					properties: {}
+					properties: {
+						"route": entity.trip.tripId[12]
+					}
 				}
 			})
 		  }
@@ -67,7 +69,14 @@
 		</GeoJSONSource>
 		{#if typeof vehicles !== 'undefined'}
 			<GeoJSONSource data={vehicles}>
-				<CircleLayer />
+				<CircleLayer 
+					paint={{
+						'circle-color': ['match', ['get', 'route'], '2', 'red', '5', 'blue', 'black'],
+						'circle-radius': 7,
+						'circle-stroke-color': 'white',
+						'circle-stroke-width': 3,
+					}}
+				/>
 			</GeoJSONSource>
 		{/if}
 	</MapLibre>
