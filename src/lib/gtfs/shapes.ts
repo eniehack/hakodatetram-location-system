@@ -1,6 +1,6 @@
 import Papa from 'papaparse';
 import { readFileSync } from 'fs';
-import path, { join } from 'path';
+import { join } from 'path';
 
 interface ShapePoint {
 	shape_id: string;
