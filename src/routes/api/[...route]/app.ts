@@ -60,9 +60,9 @@ export const router = new Hono<{ Bindings: Bindings }>()
 	.get('/trip', vValidator('query', tripParamsSchema), async (c) => {
 		console.debug('trip');
 		const { id: encodedId } = c.req.valid('query');
-		console.debug(encodedId)
-		const id = decodeURIComponent(encodedId)
-		const result = (await c.env.DB.prepare("SELECT trip_headsign FROM trips WHERE trip_id = ?")
+		console.debug(encodedId);
+		const id = decodeURIComponent(encodedId);
+		const result = (await c.env.DB.prepare('SELECT trip_headsign FROM trips WHERE trip_id = ?')
 			.bind(id)
 			.first()) as null | { trip_headsign: string };
 		if (!result) {
