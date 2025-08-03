@@ -74,7 +74,7 @@
 </script>
 
 <div class="fixed top-14 bottom-0">
-	<MapLibre class="h-full w-[100vw]" zoom={14} center={{ lon: 140.7431, lat: 41.77477 }} bind:map>
+	<MapLibre class="h-full w-[100vw]" zoom={13} center={{ lon: 140.7431, lat: 41.77477 }} bind:map>
 		<NavigationControl />
 		<ScaleControl />
 		<RasterTileSource
@@ -107,7 +107,7 @@
 						map!.getCanvas().style.cursor = 'pointer';
 						const coordinates = e.features[0].geometry.coordinates.slice();
 						const properties = e.features[0].properties;
-						const resp = await apiClient.trip.$get({ query: { id: properties.trip_id } });
+						const resp = await apiClient.trip.$get({ query: { id: encodeURIComponent(properties.trip_id) } });
 						if (!resp.ok) {
 							popup = { coord: coordinates, content: 'err' };
 							return;
