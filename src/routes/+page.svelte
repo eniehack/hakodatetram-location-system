@@ -16,6 +16,7 @@
 	} from 'svelte-maplibre-gl';
 	import { vehicleUpdate } from '$lib/models/vehiclePosition';
 	import { makeClient } from './api/[...route]/apiClient';
+	import Modal from './Modal.svelte';
 
 	let rt = $state<EventSource>();
 	let vehicleMap = $state<Map<string, { position: { lat: number; lng: number } }>>(new Map());
@@ -44,6 +45,7 @@
 	});
 	let map = $state<maplibregl.Map>();
 	let apiClient = $state(makeClient(fetch));
+	let isModalOpen = $state(true);
 
 	onMount(() => {
 		rt = new EventSource(resolve(`/api/rt`));
@@ -72,6 +74,8 @@
 	});
 	let popup = $state<{ coord: [number, number]; content: string } | undefined>();
 </script>
+
+<Modal bind:isOpen={isModalOpen} />
 
 <div class="fixed top-14 bottom-0">
 	<MapLibre class="h-full w-[100vw]" zoom={13} center={{ lon: 140.7431, lat: 41.77477 }} bind:map>
