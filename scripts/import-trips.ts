@@ -1,19 +1,11 @@
-import Papa from 'papaparse';
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { defineCommand, runMain } from 'citty';
+import { generateTripJson } from './generateTripJson';
 
-interface Trip {
-	trip_id: string;
-	trip_headsign: string;
-	route_id: string;
-	service_id: string;
-}
-
-function escapeSQL(str: string): string {
-	if (!str) return 'NULL';
-	return `'${str.replace(/'/g, "''")}'`;
-}
+const stripBom = (text: AllowSharedBufferSource): string => {
+	return new TextDecoder().decode(text);
+};
 
 const main = defineCommand({
 	meta: {
@@ -22,11 +14,15 @@ const main = defineCommand({
 	args: {
 		input: {
 			type: 'string',
-			default: join(__dirname, '../tmp/trips.txt')
+			default: join(import.meta.dirname, '../tmp/trips.txt')
 		},
 		output: {
 			type: 'string',
-			default: join(__dirname, '../tmp/trips.sql')
+			default: join(import.meta.dirname, '../static/trips.json')
+		},
+		stdout: {
+			type: 'boolean',
+			default: false
 		}
 	},
 	run({ args }) {
@@ -34,46 +30,15 @@ const main = defineCommand({
 			console.log('📖 Reading trips.txt...');
 
 			// GTFS trips.txt読み込み
-			const tripsCSV = readFileSync(args.input, 'utf-8');
+			const tripsCSVFile = readFileSync(args.input);
+			const tripsCSV = stripBom(tripsCSVFile);
 
-			// CSVパース
-			const parsed = Papa.parse<Trip>(tripsCSV, {
-				header: true,
-				skipEmptyLines: true
-			});
-
-			if (parsed.errors.length > 0) {
-				console.error('❌ CSV Parse errors:', parsed.errors);
-				return;
+			const tripJson = generateTripJson(tripsCSV);
+			if (args.stdout) {
+				console.log(JSON.stringify(tripJson));
+			} else {
+				writeFileSync(args.output, JSON.stringify(tripJson));
 			}
-
-			console.log(`📊 Found ${parsed.data.length} trips`);
-
-			// SQL生成
-			const sqlStatements: string[] = [];
-
-			// テーブル作成
-			sqlStatements.push(`
-        DROP TABLE IF EXISTS trips;
-        CREATE TABLE trips (
-          trip_id TEXT PRIMARY KEY,
-          trip_headsign TEXT,
-          route_id TEXT,
-          service_id TEXT
-        );
-      `);
-
-			// データ挿入
-			parsed.data.forEach((trip) => {
-				if (trip.trip_id) {
-					sqlStatements.push(
-						`INSERT INTO trips (trip_id, trip_headsign, route_id, service_id) VALUES (${escapeSQL(trip.trip_id)}, ${escapeSQL(trip.trip_headsign)}, ${escapeSQL(trip.route_id)}, ${escapeSQL(trip.service_id)});`
-					);
-				}
-			});
-
-			// SQLファイル書き出し
-			writeFileSync(args.output, sqlStatements.join('\n'));
 		} catch (error) {
 			console.error('❌ Import failed:', error);
 		}
