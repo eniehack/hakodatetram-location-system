@@ -12,11 +12,14 @@
 		GeoJSONSource,
 		LineLayer,
 		CircleLayer,
-		Popup
+		Popup,
+		SymbolLayer
 	} from 'svelte-maplibre-gl';
 	import { vehicleUpdate } from '$lib/models/vehiclePosition';
-	import { makeClient } from './api/[...route]/apiClient';
 	import Modal from './Modal.svelte';
+	import type { PageProps } from './$types';
+
+	let { data }: PageProps = $props();
 
 	let rt = $state<EventSource>();
 	let vehicleMap = $state<Map<string, { position: { lat: number; lng: number } }>>(new Map());
@@ -44,7 +47,6 @@
 		return json;
 	});
 	let map = $state<maplibregl.Map>();
-	let apiClient = $state(makeClient(fetch));
 	let isModalOpen = $state(true);
 
 	onMount(() => {
@@ -98,6 +100,21 @@
 				}}
 			/>
 		</GeoJSONSource>
+		<GeoJSONSource data="/stops.json">
+			<CircleLayer
+				paint={{
+					'circle-radius': 7,
+					'circle-stroke-color': 'white',
+					'circle-stroke-width': 3
+				}}
+			/>
+			<!-- <SymbolLayer
+			layout={{
+              'text-anchor': 'top',
+			  'text-field': ['get', 'stop-name']
+			}}
+			/> -->
+		</GeoJSONSource>
 		{#if typeof vehiclesGeoJson !== 'undefined'}
 			<GeoJSONSource data={vehiclesGeoJson}>
 				<CircleLayer
@@ -107,19 +124,12 @@
 						'circle-stroke-color': 'white',
 						'circle-stroke-width': 3
 					}}
-					onmouseenter={async (e) => {
+					onmouseenter={(e) => {
 						map!.getCanvas().style.cursor = 'pointer';
 						const coordinates = e.features[0].geometry.coordinates.slice();
 						const properties = e.features[0].properties;
-						const resp = await apiClient.trip.$get({
-							query: { id: encodeURIComponent(properties.trip_id) }
-						});
-						if (!resp.ok) {
-							popup = { coord: coordinates, content: 'err' };
-							return;
-						}
-						const { headsign } = await resp.json();
-						popup = { coord: coordinates, content: headsign };
+						const headsign = data.tripHeadsigns.get(properties.trip_id);
+						popup = { coord: coordinates, content: headsign ?? 'err' };
 					}}
 					onmouseleave={() => {
 						map!.getCanvas().style.cursor = '';
