@@ -48,11 +48,6 @@
 		"vite": "^7.0.4",
 		"vitest": "^4.1.10"
 	},
-	"pnpm": {
-		"onlyBuiltDependencies": [
-			"esbuild"
-		]
-	},
 	"dependencies": {
 		"@hono/valibot-validator": "^0.5.3",
 		"hono": "^4.8.10"
