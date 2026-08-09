@@ -4,9 +4,9 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
 	plugins: [tailwindcss(), sveltekit()],
-	build: {
+	server: {
 		watch: {
-			exclude: ['scripts/**']
+			ignored: ['scripts/**']
 		}
 	}
 });

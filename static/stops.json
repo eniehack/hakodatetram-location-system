@@ -1,0 +1,32 @@
+{
+"type": "FeatureCollection",
+"name": "stops",
+"features": [
+{ "type": "Feature", "properties": { "stop_code": "Y26", "stop_name": "谷地頭" }, "geometry": { "type": "Point", "coordinates": [ 140.716395714285511, 41.75323 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY09", "stop_name": "五稜郭公園前" }, "geometry": { "type": "Point", "coordinates": [ 140.752522857142992, 41.7892075 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY17", "stop_name": "函館駅前" }, "geometry": { "type": "Point", "coordinates": [ 140.727897142856989, 41.772365 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY01", "stop_name": "湯の川" }, "geometry": { "type": "Point", "coordinates": [ 140.790094285714503, 41.7811075 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY08", "stop_name": "杉並町" }, "geometry": { "type": "Point", "coordinates": [ 140.75875, 41.78869 ] } },
+{ "type": "Feature", "properties": { "stop_code": "D21", "stop_name": "末広町" }, "geometry": { "type": "Point", "coordinates": [ 140.712461428571487, 41.7666025 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY06", "stop_name": "深堀町" }, "geometry": { "type": "Point", "coordinates": [ 140.770008571428491, 41.787145 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY10", "stop_name": "中央病院前" }, "geometry": { "type": "Point", "coordinates": [ 140.75095, 41.78662 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY18", "stop_name": "市役所前" }, "geometry": { "type": "Point", "coordinates": [ 140.725632857143012, 41.76948 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY13", "stop_name": "昭和橋" }, "geometry": { "type": "Point", "coordinates": [ 140.7408, 41.77793 ] } },
+{ "type": "Feature", "properties": { "stop_code": "Y25", "stop_name": "青柳町" }, "geometry": { "type": "Point", "coordinates": [ 140.71846714285698, 41.756475 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY12", "stop_name": "堀川町" }, "geometry": { "type": "Point", "coordinates": [ 140.7443, 41.78065 ] } },
+{ "type": "Feature", "properties": { "stop_code": "D22", "stop_name": "大町" }, "geometry": { "type": "Point", "coordinates": [ 140.709322857142496, 41.7699475 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY16", "stop_name": "松風町" }, "geometry": { "type": "Point", "coordinates": [ 140.7332, 41.77149 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY03", "stop_name": "アリーナ前" }, "geometry": { "type": "Point", "coordinates": [ 140.78245, 41.78189 ] } },
+{ "type": "Feature", "properties": { "stop_code": "Y24", "stop_name": "宝来町" }, "geometry": { "type": "Point", "coordinates": [ 140.720068571428499, 41.7608375 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY04", "stop_name": "駒場車庫前" }, "geometry": { "type": "Point", "coordinates": [ 140.77913, 41.7833225 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY07", "stop_name": "柏木町" }, "geometry": { "type": "Point", "coordinates": [ 140.7653, 41.787925 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY11", "stop_name": "千代台" }, "geometry": { "type": "Point", "coordinates": [ 140.7484, 41.78396 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY02", "stop_name": "湯の川温泉" }, "geometry": { "type": "Point", "coordinates": [ 140.78515, 41.78003 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY05", "stop_name": "競馬場前" }, "geometry": { "type": "Point", "coordinates": [ 140.7765, 41.784195 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY14", "stop_name": "千歳町" }, "geometry": { "type": "Point", "coordinates": [ 140.7384, 41.77598 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY15", "stop_name": "新川町" }, "geometry": { "type": "Point", "coordinates": [ 140.7356, 41.773745 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY19", "stop_name": "魚市場通" }, "geometry": { "type": "Point", "coordinates": [ 140.722941428571517, 41.76679 ] } },
+{ "type": "Feature", "properties": { "stop_code": "DY20", "stop_name": "十字街" }, "geometry": { "type": "Point", "coordinates": [ 140.719471428572007, 41.764407500000104 ] } },
+{ "type": "Feature", "properties": { "stop_code": "D23", "stop_name": "函館どつく前" }, "geometry": { "type": "Point", "coordinates": [ 140.7043, 41.77315 ] } }
+]
+}

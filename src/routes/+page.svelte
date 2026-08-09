@@ -12,11 +12,14 @@
 		GeoJSONSource,
 		LineLayer,
 		CircleLayer,
-		Popup
+		Popup,
+		SymbolLayer
 	} from 'svelte-maplibre-gl';
 	import { vehicleUpdate } from '$lib/models/vehiclePosition';
-	import { makeClient } from './api/[...route]/apiClient';
 	import Modal from './Modal.svelte';
+	import type { PageProps } from './$types';
+
+	let { data }: PageProps = $props();
 
 	let rt = $state<EventSource>();
 	let vehicleMap = $state<Map<string, { position: { lat: number; lng: number } }>>(new Map());
@@ -44,7 +47,6 @@
 		return json;
 	});
 	let map = $state<maplibregl.Map>();
-	let apiClient = $state(makeClient(fetch));
 	let isModalOpen = $state(true);
 
 	onMount(() => {
@@ -78,23 +80,52 @@
 <Modal bind:isOpen={isModalOpen} />
 
 <div class="fixed top-14 bottom-0">
-	<MapLibre class="h-full w-[100vw]" zoom={13} center={{ lon: 140.7431, lat: 41.77477 }} bind:map>
+	<MapLibre
+		class="h-full w-[100vw]"
+		style="https://tile.openstreetmap.jp/styles/openmaptiles/style.json"
+		zoom={13}
+		center={{ lon: 140.7431, lat: 41.77477 }}
+		bind:map
+	>
 		<NavigationControl />
 		<ScaleControl />
-		<RasterTileSource
+		<!-- <RasterTileSource
 			tiles={['https://tile.openstreetmap.org/{z}/{x}/{y}.png']}
 			tileSize={256}
 			attribution="<a href=&quot;https://www.openstreetmap.org/copyright&quot;>&copy; OpenStreetMap contributors</a>"
 		>
 			<RasterLayer />
-		</RasterTileSource>
+		</RasterTileSource> -->
 		<GeoJSONSource
-			attribution="&copy; <a href=&quot;https://www.city.hakodate.hokkaido.jp/tram/&quot;>函館市企業局交通部</a> <a href=&quot;https://gtfs-jp.org/GTFS-RUL(ODPT).pdf&quot;>（ODPT GTFS-RU）</a>"
+			attribution="&copy; <a target=&quot;_blank&quot; href=&quot;https://www.city.hakodate.hokkaido.jp/docs/2020052700015/&quot;>函館市企業局交通部</a>"
 			data={resolve('/shapes.json')}
 		>
 			<LineLayer
 				paint={{
 					'line-color': ['coalesce', ['get', 'route_color'], 'white']
+				}}
+			/>
+		</GeoJSONSource>
+		<GeoJSONSource
+			data="/stops.json"
+			attribution="&copy; <a target=&quot;_blank&quot; href=&quot;https://www.city.hakodate.hokkaido.jp/docs/2020052700015/&quot;>函館市企業局交通部</a>"
+		>
+			<CircleLayer
+				paint={{
+					'circle-radius': 7,
+					'circle-stroke-color': 'white',
+					'circle-stroke-width': 3
+				}}
+			/>
+			<SymbolLayer
+				paint={{
+					'text-halo-width': 2,
+					'text-halo-color': 'white'
+				}}
+				layout={{
+					'text-font': ['Noto Sans Bold'],
+					'text-offset': [0, 1.5],
+					'text-field': ['get', 'stop_name']
 				}}
 			/>
 		</GeoJSONSource>
@@ -107,19 +138,12 @@
 						'circle-stroke-color': 'white',
 						'circle-stroke-width': 3
 					}}
-					onmouseenter={async (e) => {
+					onmouseenter={(e) => {
 						map!.getCanvas().style.cursor = 'pointer';
 						const coordinates = e.features[0].geometry.coordinates.slice();
 						const properties = e.features[0].properties;
-						const resp = await apiClient.trip.$get({
-							query: { id: encodeURIComponent(properties.trip_id) }
-						});
-						if (!resp.ok) {
-							popup = { coord: coordinates, content: 'err' };
-							return;
-						}
-						const { headsign } = await resp.json();
-						popup = { coord: coordinates, content: headsign };
+						const headsign = data.tripHeadsigns.get(properties.trip_id);
+						popup = { coord: coordinates, content: headsign ?? 'err' };
 					}}
 					onmouseleave={() => {
 						map!.getCanvas().style.cursor = '';
