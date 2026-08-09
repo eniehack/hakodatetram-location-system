@@ -80,16 +80,22 @@
 <Modal bind:isOpen={isModalOpen} />
 
 <div class="fixed top-14 bottom-0">
-	<MapLibre class="h-full w-[100vw]" zoom={13} center={{ lon: 140.7431, lat: 41.77477 }} bind:map>
+	<MapLibre
+		class="h-full w-[100vw]"
+		style="https://tile.openstreetmap.jp/styles/openmaptiles/style.json"
+		zoom={13}
+		center={{ lon: 140.7431, lat: 41.77477 }}
+		bind:map
+	>
 		<NavigationControl />
 		<ScaleControl />
-		<RasterTileSource
+		<!-- <RasterTileSource
 			tiles={['https://tile.openstreetmap.org/{z}/{x}/{y}.png']}
 			tileSize={256}
 			attribution="<a href=&quot;https://www.openstreetmap.org/copyright&quot;>&copy; OpenStreetMap contributors</a>"
 		>
 			<RasterLayer />
-		</RasterTileSource>
+		</RasterTileSource> -->
 		<GeoJSONSource
 			attribution="&copy; <a href=&quot;https://www.city.hakodate.hokkaido.jp/tram/&quot;>函館市企業局交通部</a> <a href=&quot;https://gtfs-jp.org/GTFS-RUL(ODPT).pdf&quot;>（ODPT GTFS-RU）</a>"
 			data={resolve('/shapes.json')}
@@ -102,18 +108,24 @@
 		</GeoJSONSource>
 		<GeoJSONSource data="/stops.json">
 			<CircleLayer
+
 				paint={{
 					'circle-radius': 7,
 					'circle-stroke-color': 'white',
 					'circle-stroke-width': 3
 				}}
 			/>
-			<!-- <SymbolLayer
-			layout={{
-              'text-anchor': 'top',
-			  'text-field': ['get', 'stop-name']
-			}}
-			/> -->
+			<SymbolLayer
+				paint={{
+					'text-halo-width': 2,
+					'text-halo-color': 'white'
+				}}
+				layout={{
+					'text-font': ['Noto Sans Bold'],
+					'text-offset': [0, 1.5],
+					'text-field': ['get', 'stop_name']
+				}}
+			/>
 		</GeoJSONSource>
 		{#if typeof vehiclesGeoJson !== 'undefined'}
 			<GeoJSONSource data={vehiclesGeoJson}>
