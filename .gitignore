@@ -24,5 +24,6 @@ vite.config.ts.timestamp-*
 
 tmp/*
 !tmp/.gitkeep
+.tmp/*
 
 wrangler.toml
