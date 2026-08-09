@@ -97,7 +97,7 @@
 			<RasterLayer />
 		</RasterTileSource> -->
 		<GeoJSONSource
-			attribution="&copy; <a href=&quot;https://www.city.hakodate.hokkaido.jp/tram/&quot;>函館市企業局交通部</a> <a href=&quot;https://gtfs-jp.org/GTFS-RUL(ODPT).pdf&quot;>（ODPT GTFS-RU）</a>"
+			attribution="&copy; <a href=&quot;https://www.city.hakodate.hokkaido.jp/docs/2020052700015/&quot;>函館市企業局交通部</a>"
 			data={resolve('/shapes.json')}
 		>
 			<LineLayer
@@ -106,7 +106,9 @@
 				}}
 			/>
 		</GeoJSONSource>
-		<GeoJSONSource data="/stops.json">
+		<GeoJSONSource data="/stops.json"
+		attribution="&copy; <a href=&quot;https://www.city.hakodate.hokkaido.jp/docs/2020052700015/&quot;>函館市企業局交通部</a>"
+		>
 			<CircleLayer
 
 				paint={{
