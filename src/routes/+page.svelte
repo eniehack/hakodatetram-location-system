@@ -106,11 +106,11 @@
 				}}
 			/>
 		</GeoJSONSource>
-		<GeoJSONSource data="/stops.json"
-		attribution="&copy; <a href=&quot;https://www.city.hakodate.hokkaido.jp/docs/2020052700015/&quot;>函館市企業局交通部</a>"
+		<GeoJSONSource
+			data="/stops.json"
+			attribution="&copy; <a href=&quot;https://www.city.hakodate.hokkaido.jp/docs/2020052700015/&quot;>函館市企業局交通部</a>"
 		>
 			<CircleLayer
-
 				paint={{
 					'circle-radius': 7,
 					'circle-stroke-color': 'white',

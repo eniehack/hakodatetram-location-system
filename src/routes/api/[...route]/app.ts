@@ -45,31 +45,30 @@ setInterval(async () => {
 	emitter.emit('trip-update', data);
 }, 1000 * 30);
 
-export const router = new Hono()
-	.get('/rt', async (c) => {
-		return streamSSE(c, async (stream) => {
-			const vehicleUpdate = (data) => {
-				stream.writeSSE({
-					event: 'vehicle-update',
-					data: JSON.stringify(data)
-				});
-			};
-			const tripUpdate = (data) => {
-				stream.writeSSE({
-					event: 'trip-update',
-					data: JSON.stringify(data)
-				});
-			};
-			emitter.on('vehicle-update', vehicleUpdate);
-			emitter.on('trip-update', tripUpdate);
-			stream.onAbort(() => {
-				emitter.off('data-update', vehicleUpdate);
+export const router = new Hono().get('/rt', async (c) => {
+	return streamSSE(c, async (stream) => {
+		const vehicleUpdate = (data) => {
+			stream.writeSSE({
+				event: 'vehicle-update',
+				data: JSON.stringify(data)
 			});
-			while (true) {
-				await new Promise((resolve) => setTimeout(resolve, 1000 * 30));
-			}
+		};
+		const tripUpdate = (data) => {
+			stream.writeSSE({
+				event: 'trip-update',
+				data: JSON.stringify(data)
+			});
+		};
+		emitter.on('vehicle-update', vehicleUpdate);
+		emitter.on('trip-update', tripUpdate);
+		stream.onAbort(() => {
+			emitter.off('data-update', vehicleUpdate);
 		});
+		while (true) {
+			await new Promise((resolve) => setTimeout(resolve, 1000 * 30));
+		}
 	});
+});
 
 export type Router = typeof router;
 export const app = new Hono().route('/api', router);
