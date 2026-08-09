@@ -54,7 +54,7 @@
 				</button>
 				<a
 					class="block min-w-[80px] rounded bg-gray-500 px-4 py-2 text-center font-medium text-white transition-colors hover:bg-gray-600"
-					href="https://icas.hakodatecitytram.com/"
+					href="https://icas.hakodatecitytram.com/location/index.htm"
 				>
 					やめる
 					<span class="text-xs">（ICAS locationへ）</span>
