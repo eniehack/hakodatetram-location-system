@@ -14,11 +14,11 @@ setInterval(async () => {
 	}
 	const buffer = await resp.arrayBuffer();
 	const feed = gtfsRealtimeBindings.transit_realtime.FeedMessage.decode(new Uint8Array(buffer));
-	console.debug(feed.toJSON());
+	// console.debug(feed.toJSON());
 	const data = {
 		ts: new Date().toISOString(),
 		entities: feed.entity.map((entity) => {
-			console.debug(entity.vehicle);
+			// console.debug(entity.vehicle);
 			if (entity.vehicle) return entity.vehicle;
 		})
 	};
@@ -34,11 +34,11 @@ setInterval(async () => {
 	}
 	const buffer = await resp.arrayBuffer();
 	const feed = gtfsRealtimeBindings.transit_realtime.FeedMessage.decode(new Uint8Array(buffer));
-	console.debug(feed.toJSON());
+	// console.debug(feed.toJSON());
 	const data = {
 		ts: new Date().toISOString(),
 		entities: feed.entity.map((entity) => {
-			console.debug(entity.tripUpdate);
+			// console.debug(entity.tripUpdate);
 			if (entity.tripUpdate) return entity.tripUpdate;
 		})
 	};
